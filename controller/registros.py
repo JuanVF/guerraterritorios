@@ -3,6 +3,7 @@ import sys
 sys.path.append("..")
 
 from guerraterritorios.models.disparos import esUnDisparo
+from guerraterritorios.models.potencias import esUnaPotencia
 from guerraterritorios.controller.operaciones import *
 from guerraterritorios.utils.constantes import REGISTROS_PATH
 from guerraterritorios.utils.utils import obtenerFecha
@@ -43,18 +44,26 @@ def guardarRegistroAtaque(disparo):
 
     return guardar(REGISTROS_PATH, registro)
 
-# E: Un string e int
-# S: Un booleano
-# D: Guarda en registros.log informacion acerca de una compra de misiles
-#   retorna True si se guardo bien
-def guardarRegistroCompra(nombre, cant):
-    return True
-
 # E: Una lista del modelo potencia
 # S: Un booleano
 # D: Guarda en registros.log informacion acerca del cambio de estado de una potencia
 #   retorna True si se guardo bien
 def guardarRegistroCambio(potencia):
+    if not esUnaPotencia(potencia)
+        return False
+    
+    formato = potencia[0] + " paso a " + potencia[1]
+
+    registro = leerRegistros()
+    registro += [[obtenerFecha(), tiposRegistro[2], formato]]
+
+    return guardar(REGISTROS_PATH, registro)
+
+# E: Un string e int
+# S: Un booleano
+# D: Guarda en registros.log informacion acerca de una compra de misiles
+#   retorna True si se guardo bien
+def guardarRegistroCompra(nombre, cant):
     return True
 
 # E: Una lista del modelo potencia
