@@ -17,7 +17,7 @@ def esUnCanton(lista):
     if not cumpleEstructura(lista, cantones):
         return False
 
-    if len(lista[1]) > 2:
+    if len(lista[1]) != 2:
         return False
 
     if not esUnaCoordenada(lista[1][0]) and not esUnaCoordenada(lista[1][1]):

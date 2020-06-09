@@ -30,4 +30,20 @@ def esUnaCoordenada(lista):
 # S: Un booleano
 # D: Retorna True si cumple el modelo de posicion
 def esUnaPosicion(lista):
-    return cumpleEstructura(lista, pos)
+    if not cumpleEstructura(lista, pos):
+        return False
+
+    grados = lista[0]
+    minutos = lista[1]
+    segundos = lista[2]
+
+    if -180 > grados or grados > 180:
+        return False
+    
+    if 0 > segundos or segundos > 59:
+        return False
+    
+    if 0 > minutos or minutos > 59:
+        return False
+
+    return True
