@@ -49,33 +49,61 @@ def guardarRegistroAtaque(disparo):
 # D: Guarda en registros.log informacion acerca del cambio de estado de una potencia
 #   retorna True si se guardo bien
 def guardarRegistroCambio(potencia):
-    if not esUnaPotencia(potencia)
+    if not esUnaPotencia(potencia):
         return False
     
     formato = potencia[0] + " paso a " + potencia[1]
 
     registro = leerRegistros()
     registro += [[obtenerFecha(), tiposRegistro[2], formato]]
+    
+    registro = str(registro)
 
     return guardar(REGISTROS_PATH, registro)
 
-# E: Un string e int
+# E: Un string (debe ser la variable nombre del modelo potencia) e int mayor o igual que 100
+#    y menor o igual que 1000
 # S: Un booleano
 # D: Guarda en registros.log informacion acerca de una compra de misiles
 #   retorna True si se guardo bien
 def guardarRegistroCompra(nombre, cant):
-    return True
+    formato = nombre + " compro " + str(cant) + " misiles."
 
-# E: Una lista del modelo potencia
+    registro = leerRegistros()
+    registro += [[obtenerFecha(), tiposRegistro[1], formato]]
+    registro = str(registro)
+
+    return guardar(REGISTROS_PATH, registro)
+
+# E: Un string, que debe ser la variable nombre del modelo potencia
 # S: Un booleano
 # D: Guarda en registros.log informacion acerca de la muerte de una potencia
 #   retorna True si se guardo bien
-def guardarRegistroMuerte(potencia):
-    return True
+def guardarRegistroMuerte(nombre):
+    formato = nombre.upper()
 
-# E: Una lista del modelo pais
+    registro = leerRegistros()
+    registro += [[obtenerFecha(), tiposRegistro[3], formato]]
+
+    registro = str(registro)
+
+    return guardar(REGISTROS_PATH, registro)
+
+# E: Un string (debe ser la variable nombre del modelo pais)
+#    Un string (debe ser la variable nombre del modelo provincia)
+#    Un string (debe ser la variable nombre del modelo canton)
+#    Un float (debe ser la variable vida del modelo pais)
 # S: Un booleano
 # D: Guarda en registros.log informacion acerca del estado de un territorio
 #   retorna True si se guardo bien
-def guardarRegistroTerritorio(pais):
-    return True
+def guardarRegistroTerritorio(pais, provincia, canton, vida):
+    localizacion = pais + ", " + provincia + ", " + canton
+
+    formato = localizacion + " paso a " + str(vida) + "%"
+
+    registro = leerRegistros()
+    registro += [[obtenerFecha(), tiposRegistro[4], formato]]
+
+    registro = str(registro)
+
+    return guardar(REGISTROS_PATH, registro)
