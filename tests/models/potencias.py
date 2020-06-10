@@ -65,6 +65,34 @@ def esUnaPotenciaRetornaTrueSiEsUnaPotencia():
 
     esVerdadero(esUnaPotencia(potencia))
 
+def cumpleRequisitosPotenciaPuedeEncontrarDatosCorrectos():
+    potencia = [
+        "Sirios",
+        "inactivo",
+        900,
+        123,
+        400,
+        75.0,
+        True,
+        []
+    ]
+
+    esVerdadero(cumpleRequisitosPotencia(potencia))
+
+def cumpleRequisitosPotenciaPuedeEncontrarDatosErroneos():
+    potencia = [
+        "Sirios",
+        "No Activo",
+        900,
+        123,
+        400,
+        75.0,
+        True,
+        []
+    ]
+
+    esFalso(cumpleRequisitosPotencia(potencia))
+
 def correrTests():
     printTitulo("Testeando guerraterritorios/models/potencias.py:")
 
@@ -76,5 +104,11 @@ def correrTests():
 
     print("EsUnaPotencia retorna True si se envia una potencia:")
     esUnaPotenciaRetornaTrueSiEsUnaPotencia()
+
+    print("CumpleRequisitosPotencia puede encontrar datos correctos")
+    cumpleRequisitosPotenciaPuedeEncontrarDatosCorrectos()
+
+    print("CumpleRequisitosPotencia puede encontrar datos erroneos")
+    cumpleRequisitosPotenciaPuedeEncontrarDatosErroneos()
 
 correrTests()

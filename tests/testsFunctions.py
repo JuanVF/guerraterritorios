@@ -42,3 +42,9 @@ def esUnaLista(lista):
         printPass()
     else:
         printFail(type(lista), list)
+
+def esMayorQue(num1, num2):
+    if num1 > num2:
+        printPass()
+    else:
+        printFail(num1, num2)

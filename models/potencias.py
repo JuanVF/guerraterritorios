@@ -28,3 +28,23 @@ def esUnaPotencia(lista):
             return False
             
     return True
+
+# E: Una lista del modelo potencia
+# S: Un booleano
+# D: Dada una potencia, la funcion evaluara si los datos son aptos para ser insertados
+def cumpleRequisitosPotencia(potencia):
+    nombre = potencia[0]
+    estado = potencia[1].lower()
+    cantMisiles = potencia[2]
+    
+    if nombre.strip() == "":
+        return False
+
+    if cantMisiles < 0:
+        return False
+
+    if estado != "activo" and estado != "inactivo":
+        return False
+
+    return True
+

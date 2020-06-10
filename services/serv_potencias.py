@@ -1,25 +1,142 @@
+import sys
+
+sys.path.append("..")
+
+from guerraterritorios.models.potencias import esUnaPotencia, cumpleRequisitosPotencia
+from guerraterritorios.models.paises import pagarMisiles
+
+from guerraterritorios.controller.operaciones import *
+from guerraterritorios.utils.constantes import POTENCIAS_PATH
+from guerraterritorios.utils.utils import validacionString
+# E: 
+# S: Una lista de potencias
+# D: Retorna todas las potencias del juego
+def buscarPotencias():
+    potencias = eval(leer(POTENCIAS_PATH))
+
+    return potencias
+
+
+# E: Un string
+# S: Una lista del modelo potencia
+# D: Dado el nombre de una potencia, la buscara y la retornara
+def buscarPotencia(nombre):
+    potencias = buscarPotencias()
+    
+    for potencia in potencias:
+        if potencia[0].strip().lower() == nombre.strip().lower():
+            return potencia
+    
+    return []
+
+# E: Una lista del modelo potencias
+# S: Un booleano
+# D: Dada una lista del modelo potencia, la busca y la actualiza, retorna False si hay error
+def actualizarPotencia(potencia):
+    potencias = buscarPotencias()
+    posicion = buscarPosicionPotencia(potencia[0])
+
+    if posicion == -1:
+        return False
+
+    potencias[posicion] = potencia
+    potencias = str(potencias)
+    
+    return guardar(POTENCIAS_PATH, potencias)
+
+# E: Un string
+# S: Un int mayor o igual que -1
+# D: Dado el nombre de una potencia, la busca y retorna su posicion en las potencias
+def buscarPosicionPotencia(nombre):
+    potencias = buscarPotencias()
+    length = len(potencias)
+    for index in range(0, length):
+        if potencias[index][0].strip().lower() == nombre.strip().lower():
+            return index
+    
+    return -1
+
 # E: Dos strings, un flotante, un booleano, dos ints
 # S: Un booleano
 # D: Guarda una lista si cumple el modelo de potencias, retorna False si no lo cumple
-def guardarPotencia(nombre, estado, estadoVida, cantMisiles, vida):
-    return True
+def guardarPotencia(nombre, estado, vida, cantMisiles, estadoVida):
+    potencia = [nombre, estado, cantMisiles, 0, 0, vida, estadoVida, []]
+
+    if not esUnaPotencia(potencia) or not cumpleRequisitosPotencia(potencia):
+        return False
+
+    if buscarPotencia(nombre) != []:
+        return False
+    
+    potencia[1] = potencia[1].lower().strip()
+    potencias = buscarPotencias()
+    potencias += [potencia]
+    potencias = str(potencias)
+
+    return guardar(POTENCIAS_PATH, potencias)
 
 # E: Dos strings
 # S: Un booleano
 # D: Busca una potencia por su nombre y cambia su estado, retorna False si la potencia no existe
 def cambiarEstado(nombre, estado):
-    return True
+    potencia = buscarPotencia(nombre)
+
+    if potencia == []:
+        return False
+
+    estado = estado.lower()
+
+    if validacionString(estado) and estado != "activo" and estado != "inactivo":
+        return False
+
+    potencia[1] = estado
+
+    return actualizarPotencia(potencia)
 
 # E: Un string y un int mayor o igual que 100
 # S: Un booleano
 # D: Se encarga de comprar misiles a la potencia, sino le alcanza retorna False
 def comprarMisiles(nombre, cant):
-    return True
+    if cant < 100 or cant > 1000:
+        return False
 
-# E:
-# S: Una lista
+    if cant % 100 != 0:
+        return False
+
+    potencia = buscarPotencia(nombre)
+
+    if potencia == []:
+        return False
+
+    vidaInicial = potencia[5]
+    porcentaje = (cant / 1000) 
+    
+    pagarMisiles(potencia[7], porcentaje)
+
+
+    vida = calcularVidaPotencia(potencia)
+    potencia[5] = vida
+
+    if vidaInicial != potencia[5]:
+        potencia[2] += cant
+
+    return actualizarPotencia(potencia)
+
+# E: Una lista del modelo potencia
+# S: Un float
+# D: Retorna la nueva vida de la potencia
+def calcularVidaPotencia(potencia):
+    paises = potencia[7]
+    sumVida = 0.0
+
+    for pais in paises:
+        sumVida += pais[1]
+    
+    promVida = sumVida / len(paises)
+
+    return promVida
+
+# E/S:
 # D: Devuelve una lista con informacion general de todas las potencias
-def obtenerInfoPotencias():
-    info = []
-
-    return []
+def consultarPotencias():
+    print("")

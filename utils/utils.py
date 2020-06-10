@@ -55,3 +55,8 @@ def ordenarPaisSegunVida(lista):
     listaOrdenada = []
 
     return listaOrdenada
+# E: Un string
+# S: Un booleano
+# D: Retorna true si el string no es vacio
+def validacionString(string):
+    return string.lower().strip() == ""
