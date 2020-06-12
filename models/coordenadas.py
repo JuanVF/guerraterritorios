@@ -5,8 +5,8 @@ sys.path.append("..")
 from guerraterritorios.utils.utils import cumpleEstructura
 
 coordenadas = [
-    list,  # pos1
-    list,  # pos2
+    list,  # longitud
+    list,  # latitud
 ]
 
 pos = [

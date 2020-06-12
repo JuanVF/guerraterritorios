@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 
 from guerraterritorios.utils.utils import cumpleEstructura
-from guerraterritorios.models.coordenadas import esUnaCoordenada
+from guerraterritorios.models.coordenadas import *
 
 cantones = [
     str,  # nombre
