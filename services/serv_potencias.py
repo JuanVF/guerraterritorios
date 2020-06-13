@@ -7,7 +7,7 @@ from guerraterritorios.models.paises import pagarMisiles
 
 from guerraterritorios.controller.operaciones import *
 from guerraterritorios.utils.constantes import POTENCIAS_PATH
-from guerraterritorios.utils.utils import validacionString
+from guerraterritorios.utils import constantes as colores
 # E: 
 # S: Una lista de potencias
 # D: Retorna todas las potencias del juego
@@ -59,16 +59,15 @@ def buscarPosicionPotencia(nombre):
 # E: Dos strings, un flotante, un booleano, dos ints
 # S: Un booleano
 # D: Guarda una lista si cumple el modelo de potencias, retorna False si no lo cumple
-def guardarPotencia(nombre, estado, vida, cantMisiles, estadoVida):
-    potencia = [nombre, estado, cantMisiles, 0, 0, vida, estadoVida, []]
+def guardarPotencia(nombre):
+    potencia = [nombre, True, 1000, 0, 0, 100.0, True, []]
 
     if not esUnaPotencia(potencia) or not cumpleRequisitosPotencia(potencia):
         return False
 
     if buscarPotencia(nombre) != []:
         return False
-    
-    potencia[1] = potencia[1].lower().strip()
+
     potencias = buscarPotencias()
     potencias += [potencia]
     potencias = str(potencias)
@@ -78,18 +77,13 @@ def guardarPotencia(nombre, estado, vida, cantMisiles, estadoVida):
 # E: Dos strings
 # S: Un booleano
 # D: Busca una potencia por su nombre y cambia su estado, retorna False si la potencia no existe
-def cambiarEstado(nombre, estado):
+def cambiarEstado(nombre):
     potencia = buscarPotencia(nombre)
 
     if potencia == []:
         return False
 
-    estado = estado.lower()
-
-    if validacionString(estado) and estado != "activo" and estado != "inactivo":
-        return False
-
-    potencia[1] = estado
+    potencia[1] = not potencia[1]
 
     return actualizarPotencia(potencia)
 
@@ -139,4 +133,19 @@ def calcularVidaPotencia(potencia):
 # E/S:
 # D: Devuelve una lista con informacion general de todas las potencias
 def consultarPotencias():
-    print("")
+    potencias = buscarPotencias()
+
+    for potencia in potencias:
+        porcentajeVida = str(potencia[5]) + "%"
+        print(colores.WARNING, potencia[0], potencia[2], "misiles", porcentajeVida, potencia[3], "disparos", potencia[4], "impactos", colores.NORMAL, end="\n\n")
+        print(colores.WARNING, "Territorios:", colores.NORMAL)
+
+        for pais in potencia[7]:
+            paisVida = str(pais[1]) + "%"
+
+            print("\t",pais[0], paisVida, "de vida", "  Extension:", pais[2],"km2", end="\n\n")
+            
+            print("\t Mapa:")
+            for provincia in pais[3]:
+                for canton in provincia[1]:
+                    print("\t",canton[1])

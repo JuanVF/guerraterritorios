@@ -6,22 +6,14 @@ from guerraterritorios.tests.testsFunctions import *
 from guerraterritorios.services.serv_potencias import *
 
 def guardarPotenciaPuedeValidarDatosIncorrectos():
-    nombre = "U.R.S.S" 
-    estado = "no activo"
-    cantMisiles = 600
-    vida = 99.0
-    estadoVida = True
+    nombre = "" 
 
-    esFalso(guardarPotencia(nombre, estado, vida, cantMisiles, estadoVida))
+    esFalso(guardarPotencia(nombre))
 
 def guardarPotenciaPuedeGuardarUnaPotencia():
-    nombre = "U.R.S.S" 
-    estado = "inactivo"
-    cantMisiles = 600
-    vida = 100.0
-    estadoVida = True
+    nombre = "E.E.U.U" 
     
-    esVerdadero(guardarPotencia(nombre, estado, vida, cantMisiles, estadoVida))
+    esVerdadero(guardarPotencia(nombre))
 
 def buscarPotenciasPuedeRecibirDatosCorrectamente():
     potencias = buscarPotencias()
@@ -29,12 +21,12 @@ def buscarPotenciasPuedeRecibirDatosCorrectamente():
     esMayorQue(len(potencias), 0)
 
 def buscarPotenciaPuedeEncontrarUnaPotencia():
-    potencia = buscarPotencia("U.R.S.S")
+    potencia = buscarPotencia("E.E.U.U")
 
     esMayorQue(len(potencia), 0)
 
 def actualizarPotenciaPuedeActualizarCorrectamente():
-    potencia = buscarPotencia("U.R.S.S")
+    potencia = buscarPotencia("E.E.U.U")
     provincia = [
         "Alajuela",
         [
@@ -65,12 +57,12 @@ def actualizarPotenciaPuedeActualizarCorrectamente():
     esVerdadero(actualizarPotencia(potencia))    
 
 def cambiarEstadoPuedeActualizarCorrectamente():
-    potencia = buscarPotencia("U.R.S.S")
+    potencia = buscarPotencia("E.E.U.U")
 
-    esVerdadero(cambiarEstado(potencia[0], "activo"))
+    esVerdadero(cambiarEstado(potencia[0]))
 
 def sePuedenComprarMisilesCorrectamente():
-    potencia = buscarPotencia("U.R.S.S")
+    potencia = buscarPotencia("E.E.U.U")
 
     esVerdadero(comprarMisiles(potencia[0], 200))
 

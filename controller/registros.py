@@ -107,3 +107,11 @@ def guardarRegistroTerritorio(pais, provincia, canton, vida):
     registro = str(registro)
 
     return guardar(REGISTROS_PATH, registro)
+
+# E/S:
+# D: Imprime todos los registros del juego
+def consultarHistorico():
+    registros = leerRegistros()
+
+    for registro in registros:
+        print(registro[0], registro[1], registro[2], sep="  ", end="\n\n")
