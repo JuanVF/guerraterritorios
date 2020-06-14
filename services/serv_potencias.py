@@ -87,16 +87,10 @@ def cambiarEstado(nombre):
 
     return actualizarPotencia(potencia)
 
-# E: Un string y un int mayor o igual que 100
+# E: Un string y un int entre 100 y 1000 y divisible por 100
 # S: Un booleano
 # D: Se encarga de comprar misiles a la potencia, sino le alcanza retorna False
 def comprarMisiles(nombre, cant):
-    if cant < 100 or cant > 1000:
-        return False
-
-    if cant % 100 != 0:
-        return False
-
     potencia = buscarPotencia(nombre)
 
     if potencia == []:
@@ -105,8 +99,10 @@ def comprarMisiles(nombre, cant):
     vidaInicial = potencia[5]
     porcentaje = (cant / 1000) 
     
-    pagarMisiles(potencia[7], porcentaje)
+    rst = pagarMisiles(potencia[7], porcentaje)
 
+    if rst == []:
+        return False
 
     vida = calcularVidaPotencia(potencia)
     potencia[5] = vida

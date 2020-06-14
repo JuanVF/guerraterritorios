@@ -26,7 +26,7 @@ def esUnPais(lista):
     return True
 
 # E: Una lista de paises y un int
-# S: Una lista de paises
+# S: Una pais
 # D: Busca un territorio cuya vida sea apta para pagar los misiles y retorna la lista de paises
 #    la retorna igual si no puede pagar
 def pagarMisiles(paises, porcentaje):
@@ -37,8 +37,7 @@ def pagarMisiles(paises, porcentaje):
         disponible = (pais[1]/100) * pais[2]
 
         if disponible >= precio:
-
             pais[1] = ((disponible - precio) / pais[2])*100
-            break
+            return pais
     
-    return paises
+    return []
