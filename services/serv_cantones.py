@@ -25,3 +25,14 @@ def obtenerLongitudes(canton):
     longitud += [obtenerLongitud(canton[1][1])]
 
     return obtenerListaOrdenada(longitud)
+
+# E: Una lista de provincias
+# S: Una lista de cantones
+# D: Dada una lista de provincias retorna una lista de cantones
+def obtenerCantones(provincias):
+    cantones = []
+
+    for provincia in provincias:
+        cantones += provincia[1]
+    
+    return cantones

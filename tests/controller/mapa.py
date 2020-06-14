@@ -12,6 +12,8 @@ d = [ [[-93, 6, 7], [-10, 49, 8]], [[-80, 8, 10],[70, 50, 30]] ]
 e = [ [[-6, 8, 0], [19,8,7]], [[60, 3, 7],[-40, 50, 39]] ]          
 f = [ [[80, 4,27], [90,8,41]], [[75, 13, 52],[-80, 0, 0]] ]         
 
+mapa = obtenerMapa("tests/controller/mapa_prueba.txt")
+
 #Caso1: B contiene a A
 def hayTraslapacionCaso1():
     cantonA = ["Upala", a]
@@ -55,10 +57,38 @@ def hayTraslapacionCaso5():
 
     sonIguales(traslapaciones, expected)
 
+#Caso1: El mapa no posee traslapaciones
+def verificarTraslapacionANivelDeMapaCaso1():
+    esFalso(hayTraslapacionEnMapa(mapa[0]))
+
+#Caso2: El mapa posee traslapaciones
+def verificarTraslapacionANivelDeMapaCaso2():
+    esVerdadero(hayTraslapacionEnMapa(mapa[1]))
+
+#Caso1: La estructura del mapa es correcta y no hay traslapacion
+def sePuedeVerificarLaEstructuraDelMapaCaso1():
+    codigo = verificarEstructuraMapa(mapa[0])[0]
+    sonIguales(codigo, 0)
+
+#Caso2: La estructura del mapa es correcta y hay traslapacion
+def sePuedeVerificarLaEstructuraDelMapaCaso2():
+    codigo = verificarEstructuraMapa(mapa[1])[0]
+    sonIguales(codigo, 2)
+
+#Caso3: La estructura del mapa no es correcta
+def sePuedeVerificarLaEstructuraDelMapaCaso3():
+    codigo = verificarEstructuraMapa(mapa[2])[0]
+    sonIguales(codigo, 1)
+
+#Caso4: La estructura del mapa no es correcta (grados, min y seg)
+def sePuedeVerificarLaEstructuraDelMapaCaso4():
+    codigo = verificarEstructuraMapa(mapa[3])[0]
+    sonIguales(codigo, 1)
+
 def correrTests():
     printTitulo("Tests guerraterritorios/controller/mapa.py")
 
-    print("Caso1: B contien a A:")
+    print("Caso1: B contiene a A:")
     hayTraslapacionCaso1()
 
     print("Caso2: C toca a A:")
@@ -72,5 +102,23 @@ def correrTests():
 
     print("Caso5: e toca a a y a b por el sur, no toca a c ni a d:")
     hayTraslapacionCaso5()
+
+    print("El primer mapa de pruebas no posee traslapaciones")
+    verificarTraslapacionANivelDeMapaCaso1()
+
+    print("El segundo mapa de pruebas posee traslapaciones")
+    verificarTraslapacionANivelDeMapaCaso2()
+
+    print("La estructura del mapa es correcta y no hay traslapaciones")
+    sePuedeVerificarLaEstructuraDelMapaCaso1()
+
+    print("La estructura del mapa es correcta y hay traslapacion")
+    sePuedeVerificarLaEstructuraDelMapaCaso2()
+
+    print("La estructura del mapa no es correcta")
+    sePuedeVerificarLaEstructuraDelMapaCaso3()
+
+    print("La estructura del mapa no es correcta (grados, min y seg)")
+    sePuedeVerificarLaEstructuraDelMapaCaso4()
 
 correrTests()

@@ -3,7 +3,15 @@ import sys
 sys.path.append("..")
 
 from guerraterritorios.services.serv_cantones import *
+from guerraterritorios.services.serv_provincias import *
+from guerraterritorios.services.serv_paises import *
 from guerraterritorios.controller.operaciones import *
+
+codigosError = [
+    [0, "No hay error!"],
+    [1, "El mapa no contiene la estructura correcta de paises"],
+    [2, "La siguiente lista se traslapa", []]
+]
 
 # E: Un string
 # S: Una lista de territorios
@@ -45,8 +53,28 @@ def hayTraslapacion(cuadrante1, cuadrante2):
 
     return estaContenido(cuadrante2, cuadrante1)
 
-# E:
+# E: Una lista de paises
 # S: Booleano
+# D: Verifica que el 
+def hayTraslapacionEnMapa(paises):
+    provincias = obtenerProvincias(paises)
+    cantones = obtenerCantones(provincias)
+    
+    for i in range(0, len(cantones)):
+        for canton in cantones[i+1:]:
+            if hayTraslapacion(cantones[i], canton):
+                return True
+    
+    return False
+
+# E: Una lista de paises
+# S: Una lista
 # D: Verifica que el mapa de territorios contenga la estructura de listas adecuada
-def verificarEstructuraMapa(territorios):
-    return True
+def verificarEstructuraMapa(paises):
+    if not sonPaises(paises):
+        return codigosError[1]
+
+    if hayTraslapacionEnMapa(paises):
+        return codigosError[2]
+        
+    return codigosError[0]

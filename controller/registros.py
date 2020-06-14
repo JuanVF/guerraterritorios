@@ -52,7 +52,10 @@ def guardarRegistroCambio(potencia):
     if not esUnaPotencia(potencia):
         return False
     
-    formato = potencia[0] + " paso a " + potencia[1]
+    if potencia[1]:
+        formato = potencia[0] + " paso a Activo"
+    else:
+        formato = potencia[0] + " paso a Inactivo"
 
     registro = leerRegistros()
     registro += [[obtenerFecha(), tiposRegistro[2], formato]]

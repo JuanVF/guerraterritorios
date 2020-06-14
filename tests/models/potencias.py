@@ -13,7 +13,7 @@ def esUnaPotenciaPuedeValidarUnaListaQueNoEsPotencia():
 def esUnaPotenciaPuedeValidarPaises():
     potencia = [
         "Sirios",
-        "Activo",
+        True,
         900,
         123,
         400,
@@ -39,10 +39,10 @@ def esUnaPotenciaRetornaTrueSiEsUnaPotencia():
                         "Upala",
                         [
                             [
-                                [100, 50, 30], [150, 60, 40]
+                                [100, 50, 30], [150, 59, 40]
                             ],
                             [
-                                [100, 90, 30], [180, 30, 40]
+                                [60, 40, 59], [70, 30, 40]
                             ]
                         ]
                     ]
@@ -52,7 +52,7 @@ def esUnaPotenciaRetornaTrueSiEsUnaPotencia():
     ]
     potencia = [
         "Sirios",
-        "Activo",
+        True,
         900,
         123,
         400,
@@ -68,7 +68,7 @@ def esUnaPotenciaRetornaTrueSiEsUnaPotencia():
 def cumpleRequisitosPotenciaPuedeEncontrarDatosCorrectos():
     potencia = [
         "Sirios",
-        "inactivo",
+        False,
         900,
         123,
         400,
@@ -81,8 +81,8 @@ def cumpleRequisitosPotenciaPuedeEncontrarDatosCorrectos():
 
 def cumpleRequisitosPotenciaPuedeEncontrarDatosErroneos():
     potencia = [
-        "Sirios",
-        "No Activo",
+        "",
+        True,
         900,
         123,
         400,

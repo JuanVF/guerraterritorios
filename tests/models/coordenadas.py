@@ -5,23 +5,23 @@ sys.path.append("..")
 from guerraterritorios.tests.testsFunctions import *
 from guerraterritorios.models.coordenadas import *
 
-def esUnaPosicionPuedeVerificarSiLaListaNoCumpleLaEstructura():
+def esUnaLatitudPuedeVerificarSiLaListaNoCumpleLaEstructura():
     posicion = [120, 30, 20, 40]
 
-    esFalso(esUnaPosicion(posicion))
+    esFalso(esUnaLatitud(posicion))
 
-def esUnaPosicionPuedeVerificarUnaPosicionErronea():
+def esUnaLatitudPuedeVerificarUnaPosicionErronea():
     posicion = [-190, 50, 70]
 
-    esFalso(esUnaPosicion(posicion))
+    esFalso(esUnaLatitud(posicion))
 
-def esUnaPosicionPuedeVerificarSiLaListaCumpleLaEstructura():
-    posicion = [120, 30, 20]
+def esUnaLatitudPuedeVerificarSiLaListaCumpleLaEstructura():
+    posicion = [59, 30, 20]
 
-    esVerdadero(esUnaPosicion(posicion))
+    esVerdadero(esUnaLatitud(posicion))
 
 def esUnaCoordenadaPuedeVerificarSiLaListaCumpleLaEstructura():
-    coordenada = [[120, 30, 20],[140, 20, 50]]
+    coordenada = [[120, 30, 20],[60, 20, 50]]
     esVerdadero(esUnaCoordenada(coordenada))
 
 def esUnaCoordenadaPuedeVerificarSiLaListaNoCumpleLaEstructura():
@@ -32,13 +32,13 @@ def correrTests():
     printTitulo("Testeando guerraterritorios/models/coordenadas.py:")
 
     print("EsUnaPosicion puede verficar si la lista cumple la estructura:")
-    esUnaPosicionPuedeVerificarSiLaListaCumpleLaEstructura()
+    esUnaLatitudPuedeVerificarSiLaListaCumpleLaEstructura()
 
     print("EsUnaPosicion puede verificar si la lista tiene datos incorrectos")
-    esUnaPosicionPuedeVerificarUnaPosicionErronea()
+    esUnaLatitudPuedeVerificarUnaPosicionErronea()
 
     print("EsUnaPosicion puede verificar si la lista no cumple la estructura")
-    esUnaPosicionPuedeVerificarSiLaListaNoCumpleLaEstructura()
+    esUnaLatitudPuedeVerificarSiLaListaNoCumpleLaEstructura()
 
     print("EsUnaCoordenada puede verificar si la lista cumple la estructura")
     esUnaCoordenadaPuedeVerificarSiLaListaCumpleLaEstructura()

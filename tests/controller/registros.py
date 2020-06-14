@@ -17,10 +17,10 @@ pais = [
                         "Upala",
                         [
                             [
-                                [100, 50, 30], [150, 60, 40]
+                                [100, 50, 30], [150, 59, 40]
                             ],
                             [
-                                [100, 90, 30], [180, 30, 40]
+                                [60, 40, 30], [70, 30, 40]
                             ]
                         ]
                     ]
@@ -92,7 +92,7 @@ def registrarDisparoPuedeRegistrarDisparoQueNoAtino():
 def registrarCambioPuedeInsertarUnaPotenciaActiva():
     potencia = [
         "Sirios",
-        "Activo",
+        True,
         900,
         123,
         400,
@@ -108,7 +108,7 @@ def registrarCambioPuedeInsertarUnaPotenciaActiva():
 def registrarCambioPuedeInsertarUnaPotenciaInactiva():
     potencia = [
         "Sirios",
-        "Inactivo",
+        False,
         900,
         123,
         400,

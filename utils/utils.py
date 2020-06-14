@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 
 # E:
 # S: Un string
@@ -60,3 +61,10 @@ def ordenarPaisSegunVida(lista):
 # D: Retorna true si el string no es vacio
 def validacionString(string):
     return string.lower().strip() == ""
+
+#D: Limpia la consola
+def clear():
+    if os.name == 'nt':
+        os.system("cls")
+    else: 
+        os.system("clear")
