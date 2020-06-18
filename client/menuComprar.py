@@ -73,5 +73,3 @@ def seleccionarPotencia(potencias):
     opt = convertAInt(opt)
 
     return opt
-
-menuComprarMisiles()

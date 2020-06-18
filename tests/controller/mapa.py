@@ -85,6 +85,34 @@ def sePuedeVerificarLaEstructuraDelMapaCaso4():
     codigo = verificarEstructuraMapa(mapa[3])[0]
     sonIguales(codigo, 1)
 
+def sePuedeConvertirUnaPosicionASoloSegundos():
+    posicion = [2, 20, 59]
+
+    sonIguales(calcularSegundos(posicion), 8459)
+
+def sePuedeConvertirSegundosAUnaPosicion():
+    segundos = 8459
+
+    sonIguales(segundosAPosicion(segundos), [2, 20, 59])
+
+def sePuedeCalcularLaDistanciaEntreDosPosiciones():
+    coordenadas = [[0, 20, 30], [0, 10, 40]]
+
+    sonIguales(calcularDistancia(coordenadas), [0, 9, 50])
+
+def sePuedeCalcularLaDistanciaEntreDosPosicionesNegativas():
+    coordenadas = [[-1, 20, 30], [-1, 10, 40]]
+
+    sonIguales(calcularDistancia(coordenadas), [0, 9, 50])
+
+def sePuedeCalcularLaDistanciaEntreUnaPosicionPositivaYNegativa():
+    coordenadas = [[-1, 20, 30], [1, 10, 40]]
+
+    sonIguales(calcularDistancia(coordenadas), [1, 50, 10])
+
+def sePuedeCalcularLaExtensionDeUnPais():
+    sonIguales(calcularExtension(mapa[0][0]), 1143144595143.55)
+
 def correrTests():
     printTitulo("Tests guerraterritorios/controller/mapa.py")
 
@@ -120,5 +148,23 @@ def correrTests():
 
     print("La estructura del mapa no es correcta (grados, min y seg)")
     sePuedeVerificarLaEstructuraDelMapaCaso4()
+
+    print("Se puede convertir una posicion a segundos")
+    sePuedeConvertirUnaPosicionASoloSegundos()
+
+    print("Se puede convertir segundos a una posicion")
+    sePuedeConvertirSegundosAUnaPosicion()
+
+    print("Se puede calcular la distancia entre dos posiciones")
+    sePuedeCalcularLaDistanciaEntreDosPosiciones()
+
+    print("Se puede calcular la distancia entre dos posiciones negativas")
+    sePuedeCalcularLaDistanciaEntreDosPosicionesNegativas()
+
+    print("Se puede calcular la distancia entre una posicion negativa y positiva")
+    sePuedeCalcularLaDistanciaEntreUnaPosicionPositivaYNegativa()
+
+    print("Es posible calcular la extension de un pais")
+    sePuedeCalcularLaExtensionDeUnPais()
 
 correrTests()

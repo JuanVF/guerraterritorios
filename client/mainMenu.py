@@ -8,6 +8,7 @@ from guerraterritorios.utils.utils import clear, convertAInt
 #Menus
 from guerraterritorios.client.menuEstado import menuCambiarEstado
 from guerraterritorios.client.menuComprar import menuComprarMisiles
+from guerraterritorios.client.menuConsultas import menuConsultas
 
 #D: Menu inicial
 def menuInicial():
@@ -31,16 +32,14 @@ def seleccionMenu():
 
     opt = input(colores.WARNING+"Escriba su opcion:"+colores.NORMAL)
     opt = convertAInt(opt)
-
+    
+    clear()
     if opt == 1:
-        clear()
         menuCambiarEstado()
     elif opt == 2:
-        clear()
         menuComprarMisiles()
     elif opt == 3:
-        return
-        #menuConsultas()
+        menuConsultas()
     elif opt == 4:
         return
         #menuDispar()
@@ -48,10 +47,8 @@ def seleccionMenu():
         return
         #menuInsertarPotencia()
     elif opt == 6:
-        return
-        #menuCargarMapa()
+        menuCargarMapa()
     elif opt == 0:
-        clear()
         exitLogo()
         return
     else:

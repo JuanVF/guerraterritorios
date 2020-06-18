@@ -10,7 +10,7 @@ def menuCambiarEstado():
     potencias = buscarPotencias()
     print(colores.WARNING, "Cambiar estado de las potencias:", colores.NORMAL)
 
-    opt = seleccionarPotencia(potencias)
+    opt = obtenerPotenciaACambiar(potencias)
 
     length = len(potencias) - 1
 
