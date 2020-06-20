@@ -3,6 +3,7 @@ import sys
 sys.path.append("..")
 
 from guerraterritorios.services.serv_potencias import comprarMisiles, buscarPotencias
+from guerraterritorios.controller.registros import guardarRegistroCompra
 
 from guerraterritorios.utils import constantes as colores
 from guerraterritorios.utils.utils import convertAInt, clear
@@ -34,6 +35,7 @@ def menuDeCompra(potencia):
 
     if 100 <= cantMisiles and cantMisiles <= 1000 and cantMisiles % 100 == 0:
         if comprarMisiles(potencia[0], cantMisiles):
+            guardarRegistroCompra(potencia[0], cantMisiles)
             print("Se pudieron comprar", cantMisiles, "misiles!")
             input("")
             return

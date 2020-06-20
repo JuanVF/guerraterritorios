@@ -10,15 +10,10 @@ from guerraterritorios.client.menuEstado import menuCambiarEstado
 from guerraterritorios.client.menuComprar import menuComprarMisiles
 from guerraterritorios.client.menuConsultas import menuConsultas
 
-#D: Menu inicial
-def menuInicial():
-    logoJuego()
-    print("Presione enter para ingresar!!!")
-    input("")
-    clear()
-    seleccionMenu()
-
-def seleccionMenu():
+# E: Un mapa
+# S:
+# D: Menu Inicial del juego!
+def seleccionMenu(mapa):
     print(colores.WARNING, "Seleccione una opcion:", colores.NORMAL)
     print("___")
     print("|1| - Cambiar estado")
@@ -39,7 +34,7 @@ def seleccionMenu():
     elif opt == 2:
         menuComprarMisiles()
     elif opt == 3:
-        menuConsultas()
+        menuConsultas(mapa)
     elif opt == 4:
         return
         #menuDispar()
@@ -47,15 +42,16 @@ def seleccionMenu():
         return
         #menuInsertarPotencia()
     elif opt == 6:
-        menuCargarMapa()
+        return
+        #menuCargarMapa()
     elif opt == 0:
         exitLogo()
         return
     else:
         print(colores.FAIL,"Inserte una opcion valida...", colores.NORMAL)
-        seleccionMenu()
+        seleccionMenu(mapa)
     clear()
-    seleccionMenu()
+    seleccionMenu(mapa)
 
 #D: Imprime el logo del juego
 def logoJuego():

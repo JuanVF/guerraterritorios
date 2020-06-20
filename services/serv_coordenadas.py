@@ -52,10 +52,10 @@ def crearUnidad(posicion):
 # S: Una lista del modelo posicion
 # D: Retorna la latitud de la coordenada
 def obtenerLatitud(coordenada):
-    return coordenada[1]
+    return coordenada[0]
 
 # E: Una lista del modelo coordenada
 # S: Una lista del modelo posicion
 # D: Retorna la longitud de la coordenada
 def obtenerLongitud(coordenada):
-    return coordenada[0]
+    return coordenada[1]

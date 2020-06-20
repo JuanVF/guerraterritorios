@@ -3,6 +3,7 @@ import sys
 sys.path.append("..")
 
 from guerraterritorios.services.serv_potencias import *
+from guerraterritorios.controller.registros import guardarRegistroCambio
 from guerraterritorios.utils import constantes as colores
 from guerraterritorios.utils.utils import convertAInt, clear
 
@@ -23,6 +24,7 @@ def menuCambiarEstado():
     else:
         if cambiarEstado(potencias[opt][0]):
             clear()
+            guardarRegistroCambio(potencias[opt])
             menuCambiarEstado()
         else:
             clear()

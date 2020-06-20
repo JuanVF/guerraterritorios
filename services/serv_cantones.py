@@ -36,3 +36,15 @@ def obtenerCantones(provincias):
         cantones += provincia[1]
     
     return cantones
+
+# E: Una lista de provincias
+# S: Una lista de cantones
+# D: Dada una lista de provincias retorna una lista de cantones
+def obtenerCantonesDistintos(provincias):
+    cantones = []
+    
+    for provincia in provincias:
+        if provincia[1] not in cantones:
+            cantones += provincia[1]
+    
+    return cantones

@@ -42,21 +42,6 @@ def cumpleEstructura(lista, estructura):
 
     return True
 
-# E/S: Una lista que cumple el modelo de Potencias
-# D: Ordena un modelo de paises, segun la extension de terreno que tengan
-#   de mayor a menor
-def ordenarPaisSegunTerreno(lista):
-    listaOrdenada = []
-
-    return listaOrdenada
-
-# E/S: Una lista que cumple el modelo de Potencias
-# D: Ordena un modelo de paises, segun la cantidad de vida que tengan
-#   de mayor a menor
-def ordenarPaisSegunVida(lista):
-    listaOrdenada = []
-
-    return listaOrdenada
 # E: Un string
 # S: Un booleano
 # D: Retorna true si el string no es vacio
@@ -95,3 +80,28 @@ def obtenerPotenciaACambiar(potencias):
     opt = convertAInt(opt)
 
     return opt
+
+# E: Una lista de paises y un numero natural
+# S: La posicion del pais
+# D: Busca al pais por elemento, devuelve el mayor
+def obtenerPaisPor(paises, elem):
+    mayor = paises[0][1]
+    pos = 0
+
+    for i in range(1, len(paises)):
+        if paises[i][elem] > mayor:
+            mayor = paises[i][1]
+            pos = i
+    
+    return pos
+
+# E/S: Una lista
+# D: Elimina un elemento de la lista por su posicion
+def eliminarPorPosicion(lista, pos):
+    nuevaLista = []
+
+    for i in range(0, len(lista)):
+        if i != pos:
+            nuevaLista += [lista[i]]
+
+    return nuevaLista

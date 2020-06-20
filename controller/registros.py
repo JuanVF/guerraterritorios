@@ -52,7 +52,7 @@ def guardarRegistroCambio(potencia):
     if not esUnaPotencia(potencia):
         return False
     
-    if potencia[1]:
+    if not potencia[1]:
         formato = potencia[0] + " paso a Activo"
     else:
         formato = potencia[0] + " paso a Inactivo"
