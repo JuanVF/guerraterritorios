@@ -9,6 +9,7 @@ from guerraterritorios.utils.utils import clear, convertAInt
 from guerraterritorios.client.menuEstado import menuCambiarEstado
 from guerraterritorios.client.menuComprar import menuComprarMisiles
 from guerraterritorios.client.menuConsultas import menuConsultas
+from guerraterritorios.client.menuPotencias import menuInsertarPotencias
 
 # E: Un mapa
 # S:
@@ -21,7 +22,6 @@ def seleccionMenu(mapa):
     print("|3| - Consultas")
     print("|4| - Disparar")
     print("|5| - Insertar potencia")
-    print("|6| - Cargar mapa")
     print("|0| - Salir")
     print("---")
 
@@ -39,11 +39,7 @@ def seleccionMenu(mapa):
         return
         #menuDispar()
     elif opt == 5:
-        return
-        #menuInsertarPotencia()
-    elif opt == 6:
-        return
-        #menuCargarMapa()
+        menuInsertarPotencias()
     elif opt == 0:
         exitLogo()
         return
