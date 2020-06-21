@@ -2,7 +2,6 @@ import sys
 
 sys.path.append("..")
 
-from guerraterritorios.models.disparos import esUnDisparo
 from guerraterritorios.models.potencias import esUnaPotencia
 from guerraterritorios.controller.operaciones import *
 from guerraterritorios.utils.constantes import REGISTROS_PATH
@@ -28,9 +27,7 @@ def leerRegistros():
 # S: Un booleano
 # D: Guarda en registros.log informacion acerca de un disparo, retorna True si se guardo bien
 def guardarRegistroAtaque(disparo):
-    if not esUnDisparo(disparo):
-        return False
-
+    print(disparo[4])
     formatoCoordenadas = "("+ str(disparo[4][0][0]) + "," + str(disparo[4][0][1]) + "," + str(disparo[4][0][2]) +"), ("+ str(disparo[4][1][0]) + "," + str(disparo[4][1][1]) + "," + str(disparo[4][1][2]) +")"
 
     if disparo[7]:

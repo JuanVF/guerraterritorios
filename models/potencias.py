@@ -43,4 +43,3 @@ def cumpleRequisitosPotencia(potencia):
         return False
 
     return True
-

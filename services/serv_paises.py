@@ -35,6 +35,27 @@ def imprimirPaises(paises):
     for pais in paises:
         imprimirPais(pais)
 
+# E: Una lista de paises y un int
+# S: Una pais
+# D: Busca un territorio cuya vida sea apta para pagar los misiles y retorna la lista de paises
+#    la retorna igual si no puede pagar
+def pagarMisiles(paises, porcentaje):
+    for pais in paises:
+
+        vida = pais[1] / 100
+        areaTotal = pais[2] / vida
+        
+        precio = areaTotal * porcentaje
+        
+        disponible = pais[2]
+        
+        if disponible >= precio:
+            pais[1] = ((disponible - precio) / areaTotal)*100
+            pais[2] = disponible - precio
+            return pais
+    
+    return []
+
 # E: Un pais
 # S:
 # D: Imprime un pais

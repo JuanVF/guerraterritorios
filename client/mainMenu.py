@@ -10,11 +10,15 @@ from guerraterritorios.client.menuEstado import menuCambiarEstado
 from guerraterritorios.client.menuComprar import menuComprarMisiles
 from guerraterritorios.client.menuConsultas import menuConsultas
 from guerraterritorios.client.menuPotencias import menuInsertarPotencias
+from guerraterritorios.client.menuDisparar import menuDisparar
+
+turno = 0
 
 # E: Un mapa
 # S:
 # D: Menu Inicial del juego!
 def seleccionMenu(mapa):
+    global turno
     print(colores.WARNING, "Seleccione una opcion:", colores.NORMAL)
     print("___")
     print("|1| - Cambiar estado")
@@ -36,8 +40,7 @@ def seleccionMenu(mapa):
     elif opt == 3:
         menuConsultas(mapa)
     elif opt == 4:
-        return
-        #menuDispar()
+        turno = menuDisparar(mapa, turno)
     elif opt == 5:
         menuInsertarPotencias()
     elif opt == 0:

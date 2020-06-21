@@ -3,7 +3,8 @@ import sys
 sys.path.append("..")
 
 from guerraterritorios.models.potencias import esUnaPotencia, cumpleRequisitosPotencia
-from guerraterritorios.models.paises import pagarMisiles
+from guerraterritorios.services.serv_paises import pagarMisiles
+from guerraterritorios.controller.mapa import calcularExtension
 
 from guerraterritorios.controller.operaciones import *
 from guerraterritorios.utils.constantes import POTENCIAS_PATH
@@ -120,11 +121,28 @@ def calcularVidaPotencia(potencia):
     sumVida = 0.0
 
     for pais in paises:
+        vida = pais[1] / 100
+
         sumVida += pais[1]
     
     promVida = sumVida / len(paises)
 
     return promVida
+
+# E: 
+# S: Un booleano
+# D: Calcula la vida de todas las potencias, retorna True si todo salio bien
+def calcularVidaPotencias():
+    potencias = buscarPotencias()
+
+    for i in range(0, len(potencias)):
+        vida = calcularVidaPotencia(potencias[i])
+
+        potencias[i][5] = vida
+    
+    potencias = str(potencias)
+
+    return guardar(POTENCIAS_PATH, potencias)
 
 # E/S:
 # D: Devuelve una lista con informacion general de todas las potencias
@@ -145,3 +163,34 @@ def consultarPotencias():
             for provincia in pais[3]:
                 for canton in provincia[1]:
                     print("\t",canton[1])
+
+# E: Un string
+# S: Una potencia
+# D: Busca una potencia que contenga un pais
+def buscarPotenciaPorPais(nombre):
+    potencias = buscarPotencias()
+
+    for potencia in potencias:
+        for pais in potencia[7]:
+            if pais[0] == nombre:
+                return potencia
+
+    return []
+
+
+# E: Una potencia, una lista
+# S: Un booleano
+# D: Se encarga de asignar danos a la potencia
+def asignarDanoAPotencia(potencia, dano):
+    pais = dano[2]
+
+    for i in range(0, len(potencia[7])):
+        if potencia[7][i][0] == pais[0]:
+            potencia[7][i] = pais
+
+    potencia[5] = calcularVidaPotencia(potencia)
+    
+    if potencia[5] == 0.0:
+        potencia[1] = False
+
+    return actualizarPotencia(potencia)

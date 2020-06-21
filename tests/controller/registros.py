@@ -34,11 +34,6 @@ def leerRegistroPuedeObtenerLaListaDeLosRegistros():
 
     esUnaLista(registros)
 
-def registrarDisparoDetectaUnaListaQueNoCumpleRequisitos():
-    disparo = ["Esto no cumple el modelo de disparos"]
-
-    esFalso(guardarRegistroAtaque(disparo))
-
 def registrarDisparoPuedeRegistrarDisparoQueAtino():
     disparo = [
         "U.R.S.S",
