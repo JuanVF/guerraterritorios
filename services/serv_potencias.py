@@ -4,7 +4,7 @@ sys.path.append("..")
 
 from guerraterritorios.models.potencias import *
 from guerraterritorios.services.serv_paises import *
-from guerraterritorios.controller.mapa import calcularExtension
+from guerraterritorios.controller.mapa import *
 from guerraterritorios.controller.registros import guardarRegistroMuerte
 
 from guerraterritorios.controller.operaciones import *
@@ -141,27 +141,20 @@ def comprarMisiles(nombre, cant, PATH):
 # D: Retorna la nueva vida de la potencia
 def calcularVidaPotencia(potencia):
     paises = potencia[7]
-    sumVida = 0.0
+    extensionTotal = 0.0
+    extensionActiva = 0.0
 
     for pais in paises:
-        sumVida += pais[1]
+        extensionTotal += calcularExtension(pais)
+        extensionActiva += pais[2]
+
+    if extensionTotal == 0.0:
+        return 0.0
+
+    vida = extensionActiva / extensionTotal
+    vida *= 100.0
     
-    if len(paises) > 0:
-        promVida = sumVida / len(paises)
-    else:
-        promVida = 0.0
-
-    return promVida
-
-# E/S: Una lista de paises
-# D: Calcula la extension actual de las potencias
-def calcularExtensionPaises(paises):
-    for i in range(0, len(paises)):
-        vida = paises[i][1] / 100.0
-
-        paises[i][2] = calcularExtension(paises[i])*vida
-
-    return paises
+    return vida
 
 # E: 
 # S: Un booleano
@@ -170,11 +163,10 @@ def calcularVidaPotencias():
     potencias = buscarPotencias()
 
     for i in range(0, len(potencias)):
-        potencias[i][7] = calcularExtensionPaises(potencias[i][7])
+        potencias[i][7] = calcularExtensionActiva(potencias[i][7])
         vida = calcularVidaPotencia(potencias[i])
 
         potencias[i][5] = vida
-    
 
 
     potencias = str(potencias)
@@ -199,7 +191,7 @@ def consultarPotencias():
             print("\t Mapa:")
             for provincia in pais[3]:
                 for canton in provincia[1]:
-                    print("\t",canton[1])
+                    print("\t",canton[1], end="\n\n")
 
 # E: Un string
 # S: Una potencia

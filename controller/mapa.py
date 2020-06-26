@@ -112,6 +112,16 @@ def calcularExtension(pais):
         
     return extensionT
 
+# E/S: Una lista de paises
+# D: Calcula la extension actual de las potencias
+def calcularExtensionActiva(paises):
+    for i in range(0, len(paises)):
+        vida = paises[i][1] / 100.0
+
+        paises[i][2] = calcularExtension(paises[i])*vida
+
+    return paises
+    
 # E: Una lista de paises
 # S: Booleano
 # D: Calcula las extensiones del mapa y lo actualiza
@@ -132,7 +142,6 @@ def calcularDistancia(coordenadas):
     distancia = abs(posicion1 - posicion2)
 
     return segundosAPosicion(distancia)
-
 
 # E: Una posicion
 # S: Un entero positivo
