@@ -2,9 +2,10 @@ import sys
 
 sys.path.append("..")
 
-from guerraterritorios.models.potencias import esUnaPotencia, cumpleRequisitosPotencia
-from guerraterritorios.services.serv_paises import pagarMisiles
+from guerraterritorios.models.potencias import *
+from guerraterritorios.services.serv_paises import *
 from guerraterritorios.controller.mapa import calcularExtension
+from guerraterritorios.controller.registros import guardarRegistroMuerte
 
 from guerraterritorios.controller.operaciones import *
 from guerraterritorios.utils.constantes import POTENCIAS_PATH
@@ -17,7 +18,6 @@ def buscarPotencias():
 
     return potencias
 
-
 # E: Un string
 # S: Una lista del modelo potencia
 # D: Dado el nombre de una potencia, la buscara y la retornara
@@ -29,6 +29,23 @@ def buscarPotencia(nombre):
             return potencia
     
     return []
+
+# E:
+# S: Un booleano
+# D: Retorna True si una lista de potencias cumple los requisitos
+def verificarListaDePotencias():
+    potencias = buscarPotencias()
+    
+    for potencia in potencias:
+        if not esUnaPotencia(potencia):
+            return False
+
+    for i in range(0, len(potencias)):
+        for potencia in potencias[i+1:]:
+            if potencias[i][0].lower() == potencia[0].lower():
+                return False
+
+    return True
 
 # E: Una lista del modelo potencias
 # S: Un booleano
@@ -91,7 +108,7 @@ def cambiarEstado(nombre):
 # E: Un string y un int entre 100 y 1000 y divisible por 100
 # S: Un booleano
 # D: Se encarga de comprar misiles a la potencia, sino le alcanza retorna False
-def comprarMisiles(nombre, cant):
+def comprarMisiles(nombre, cant, PATH):
     potencia = buscarPotencia(nombre)
 
     if potencia == []:
@@ -105,7 +122,13 @@ def comprarMisiles(nombre, cant):
     if rst == []:
         return False
 
+    actualizarPaises(rst, PATH)
+
     vida = calcularVidaPotencia(potencia)
+
+    if vida == 0.0:
+        guardarRegistroMuerte(potencia[0])
+
     potencia[5] = vida
 
     if vidaInicial != potencia[5]:
@@ -121,13 +144,24 @@ def calcularVidaPotencia(potencia):
     sumVida = 0.0
 
     for pais in paises:
-        vida = pais[1] / 100
-
         sumVida += pais[1]
     
-    promVida = sumVida / len(paises)
+    if len(paises) > 0:
+        promVida = sumVida / len(paises)
+    else:
+        promVida = 0.0
 
     return promVida
+
+# E/S: Una lista de paises
+# D: Calcula la extension actual de las potencias
+def calcularExtensionPaises(paises):
+    for i in range(0, len(paises)):
+        vida = paises[i][1] / 100.0
+
+        paises[i][2] = calcularExtension(paises[i])*vida
+
+    return paises
 
 # E: 
 # S: Un booleano
@@ -136,10 +170,13 @@ def calcularVidaPotencias():
     potencias = buscarPotencias()
 
     for i in range(0, len(potencias)):
+        potencias[i][7] = calcularExtensionPaises(potencias[i][7])
         vida = calcularVidaPotencia(potencias[i])
 
         potencias[i][5] = vida
     
+
+
     potencias = str(potencias)
 
     return guardar(POTENCIAS_PATH, potencias)
@@ -182,15 +219,28 @@ def buscarPotenciaPorPais(nombre):
 # S: Un booleano
 # D: Se encarga de asignar danos a la potencia
 def asignarDanoAPotencia(potencia, dano):
-    pais = dano[2]
+    pais = dano[1]
 
     for i in range(0, len(potencia[7])):
         if potencia[7][i][0] == pais[0]:
             potencia[7][i] = pais
 
     potencia[5] = calcularVidaPotencia(potencia)
-    
+    potencia[4] += 1
+
     if potencia[5] == 0.0:
         potencia[1] = False
+        guardarRegistroMuerte(potencia[0])
+
+    return actualizarPotencia(potencia)
+
+# E: Un string
+# S: Un booleano
+# D: Se encarga de rebajar misiles y agregar la cantidad de disparos
+def potenciaDisparo(nombre):
+    potencia = buscarPotencia(nombre)
+
+    potencia[2] -= 1
+    potencia[3] += 1
 
     return actualizarPotencia(potencia)

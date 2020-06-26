@@ -11,38 +11,54 @@ from guerraterritorios.utils import constantes as colores
 
 potencias = buscarPotencias()
 
-def menuDisparar(mapa, turno):
-    if turno == -1:
-        print("Lo sentimos... todas las potencias estan inactivas...")
-        input("")
-        return calcularTurno(turno)
+def menuDisparar(mapa, turno, PATH_MAPA):
+    global potencias
+    potencias = buscarPotencias()
 
+    if not hayPotenciasActivas():
+        turno = -1
+    elif turno == -1:
+        turno = calcularTurno(turno)
+
+    if turno == -1:
+        print("No hay potencias vivas... inserte algunas para jugar")
+        input("")
+        return turno
+
+    return menuDisparos(mapa, turno, PATH_MAPA)
+
+
+def menuDisparos(mapa, turno, PATH_MAPA):
     global potencias
     print(colores.WARNING, "Seccion de disparos!", colores.NORMAL, "\n")
-
-    #TODO: Si tiene 0 misiles evitar que la potencia entre en el loop
     
-    print("Es el turno de:",potencias[turno][0], " y le quedan", potencias[turno][2], "misiles!")
+    print("Es el turno de:", potencias[turno][0], " y le quedan", potencias[turno][2], "misiles!")
     
     confirmacion = input("Desea disparar un misil? Y/N: ")
 
     if confirmacion.lower() == "y":
-        clear()
-        latitud = obtenerLatitud()
-        clear()
-        Longitud = obtenerLongitud()
+        return menuRealizarDisparo(mapa, turno, PATH_MAPA)
 
-        coordenada = [[latitud, Longitud], [latitud, Longitud]]
+    return turno
+
+def menuRealizarDisparo(mapa, turno, PATH_MAPA):
+    global potencias
+    clear()
+    Longitud = obtenerLongitud()
+    clear()
+    latitud = obtenerLatitud()
+
+    coordenada = [[Longitud, latitud], [Longitud, latitud]]
         
-        disparo = disparar(coordenada, mapa, potencias[turno][0])
+    disparo = disparar(coordenada, potencias[turno][0], PATH_MAPA)
 
-        if disparo[7]:
-            print(disparo[0], "acerto el disparo! en:")
-            print(disparo[1],disparo[2], disparo[3], sep=",",end="\n\n")
-            print("Ahora tiene:", disparo[6], "% de vida")
-        else:
-            print("Lo lamentamos, no acerto su disparo!")
-        input("\n\n Presione cualquier tecla para volver...")
+    if disparo[7]:
+        print(disparo[0], "acerto el disparo! en:")
+        print(disparo[1],disparo[2], disparo[3], sep=",",end="\n\n")
+        print("Ahora tiene:", disparo[6], "% de vida")
+    else:
+        print("Lo lamentamos, no acerto su disparo!")
+    input("\n\n Presione cualquier tecla para volver...")
 
     return calcularTurno(turno)
 
@@ -56,33 +72,31 @@ def calcularTurno(turno):
         if turno > length:
             turno = 0
         
+        if not hayPotenciasActivas():
+            return -1
+
         if potencias[turno][1]:
             avanzar = False
-
-        if not potenciasActivas():
-            return -1
     
     return turno
 
-def potenciasActivas():
-    estado = 0
-
+def hayPotenciasActivas():
     for potencia in potencias:
         if potencia[1]:
-            estado += 1
+            return True
     
-    return estado != 0
+    return False
             
 
 def obtenerLatitud():
     print(colores.NORMAL, "Latitud", colores.NORMAL)
-    grados = convertAInt(input("Inserte los grados:"))
-    minutos = convertAInt(input("Inserte los minutos:"))
-    segundos = convertAInt(input("Inserte los segundos:"))
+    grados = convertAInt(input("Inserte los grados:"), neg=True)
+    minutos = convertAInt(input("Inserte los minutos:"), neg=True)
+    segundos = convertAInt(input("Inserte los segundos:"), neg=True)
 
     posicion = [grados, minutos, segundos]
 
-    if grados == -1 or minutos == -1 or segundos == -1 or not esUnaLatitud(posicion):
+    if grados == "Error" or minutos == "Error" or segundos == "Error" or not esUnaLatitud(posicion):
         clear()
         print("Uno de los datos que ingreso no es correcto")
         return obtenerLatitud()
@@ -93,13 +107,13 @@ def obtenerLatitud():
 
 def obtenerLongitud():
     print(colores.NORMAL, "Longitud", colores.NORMAL)
-    grados = convertAInt(input("Inserte los grados:"))
-    minutos = convertAInt(input("Inserte los minutos:"))
-    segundos = convertAInt(input("Inserte los segundos:"))
+    grados = convertAInt(input("Inserte los grados:"), neg=True)
+    minutos = convertAInt(input("Inserte los minutos:"), neg=True)
+    segundos = convertAInt(input("Inserte los segundos:"), neg=True)
 
     posicion = [grados, minutos, segundos]
 
-    if grados == -1 or minutos == -1 or segundos == -1 or not esUnaLongitud(posicion):
+    if grados == "Error" or minutos == "Error" or segundos == "Error" or not esUnaLongitud(posicion):
         clear()
         print("Uno de los datos que ingreso no es correcto")
         return obtenerLatitud()

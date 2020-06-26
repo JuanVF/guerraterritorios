@@ -31,22 +31,6 @@ def obtenerListaOrdenada(posiciones):
         return [posiciones[1], posiciones[0]]
     
     return [posiciones[0], posiciones[1]]
-
-# E: Una posicion
-# S: Un int
-# D: Convierte la posicion en un solo numero
-def crearUnidad(posicion):
-    grados = posicion[0]
-    minutos = posicion[1]
-    segundos = posicion[2]
-    SF = 1
-
-    if grados < 0:
-        SF = -1
-
-    unidad = SF*(abs(grados)*10000 + minutos*100 + segundos)
-
-    return unidad
     
 # E: Una lista del modelo coordenada
 # S: Una lista del modelo posicion

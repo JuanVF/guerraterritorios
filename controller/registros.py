@@ -89,15 +89,15 @@ def guardarRegistroMuerte(nombre):
 
     return guardar(REGISTROS_PATH, registro)
 
-# E: Un string (debe ser la variable nombre del modelo pais)
-#    Un string (debe ser la variable nombre del modelo provincia)
+# E: Un string (debe ser la variable nombre del modelo potencia)
+#    Un string (debe ser la variable nombre del modelo pais)
 #    Un string (debe ser la variable nombre del modelo canton)
 #    Un float (debe ser la variable vida del modelo pais)
 # S: Un booleano
 # D: Guarda en registros.log informacion acerca del estado de un territorio
 #   retorna True si se guardo bien
-def guardarRegistroTerritorio(pais, provincia, canton, vida):
-    localizacion = pais + ", " + provincia + ", " + canton
+def guardarRegistroTerritorio(potencia, pais, vida):
+    localizacion = potencia + ", " + pais
 
     formato = localizacion + " paso a " + str(vida) + "%"
 

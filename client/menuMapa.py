@@ -13,18 +13,20 @@ def menuCargarMapa():
     path = input("Y escriba el nombre del mapa, con la extension del archivo:")
     
     mapa = obtenerMapa(path)
+    
     if mapa == []:
         clear()
         print("El archivo no existe! intentelo de nuevo", end="\n\n")
         menuCargarMapa()
     else:
         datosMapa = verificarEstructuraMapa(mapa)
-        if datosMapa[0] != 0:
+        if datosMapa[0] == 2:
+            print(colores.FAIL, datosMapa[1], colores.NORMAL, datosMapa[2], end="\n\n")
+        elif datosMapa[0] != 0:
             clear()
-            print(datosMapa[1], end="\n\n")
+            print(colores.FAIL, datosMapa[1], colores.NORMAL, end="\n\n")
             menuCargarMapa()
         else:
-            for i in range(0, len(mapa)):
-                mapa[i][2] = calcularExtension(mapa[i])
-
-            seleccionMenu(mapa)
+            calcularExtensionesMapa(mapa)
+            
+            seleccionMenu(mapa, path)

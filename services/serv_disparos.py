@@ -2,11 +2,12 @@ import sys
 
 sys.path.append("..")
 
-from guerraterritorios.services.serv_potencias import buscarPotencias, asignarDanoAPotencia, buscarPotenciaPorPais
+from guerraterritorios.services.serv_potencias import *
 from guerraterritorios.services.serv_provincias import obtenerProvincias
 from guerraterritorios.services.serv_cantones import obtenerCantones
-from guerraterritorios.controller.mapa import hayTraslapacion
-from guerraterritorios.controller.registros import guardarRegistroAtaque
+
+from guerraterritorios.controller.mapa import *
+from guerraterritorios.controller.registros import *
 
 #Variable del modelo disparo
 disparos = [
@@ -20,37 +21,52 @@ disparos = [
     bool,  # atino
 ]
 
-# E: Una coordenada, una lista de paises, un string
+# E: Una coordenada, dos string
 # S: Una lista del modelo disparo
 # D: Se encarga de realizar el disparo, recibe el nombre del jugador
-def disparar(coordenada, mapa, nombre):
-    impacto = hayImpactoDisparo(coordenada, mapa)
+def disparar(coordenada, nombre, PATH):
+    mapa = obtenerMapa(PATH)
+    potenciaDisparo(nombre)
+    datos = hayImpactoDisparo(coordenada, mapa)
 
-    if impacto != []:
-        danoProducido = calcularDano(impacto[0])
+    if datos != []:
+        impacto = realizarImpacto(datos, nombre, coordenada)
 
-        disparo = [
-                    nombre, 
-                    impacto[0][0], 
-                    impacto[1][0], 
-                    impacto[2][0], 
-                    coordenada[0], 
-                    danoProducido[0],
-                    danoProducido[1],
-                    danoProducido[2],
-                    True]
+        disparo = impacto[0]
+        pais = impacto[1]
 
-        potencia = buscarPotenciaPorPais(impacto[0][0])
-        #TODO: Falta: Agregar impactos recibidos, misiles, impactos dados!
-        if potencia != []:
-            asignarDanoAPotencia(potencia, danoProducido)
-
+        realizarImpactoAMapa(mapa, pais, PATH)
     else:
         disparo = [nombre, "","","", coordenada[0], 0,0,False]
 
     guardarRegistroAtaque(disparo)
 
     return disparo
+
+# E: Una lista, un string y una coordenada
+# S: Una lista del modelo disparo
+# D: Se encarga de realizar los detalles del impacto
+def realizarImpacto(impacto, nombre, coordenada):
+    danoProducido = calcularDano(impacto[0])
+
+    disparo = [
+                nombre, 
+                impacto[0][0], 
+                impacto[1][0], 
+                impacto[2][0], 
+                coordenada[0], 
+                danoProducido[0],
+                danoProducido[1][1],
+                danoProducido[1],
+                True]
+
+    potencia = buscarPotenciaPorPais(impacto[0][0])
+
+    if potencia != []:
+        asignarDanoAPotencia(potencia, danoProducido)
+        guardarRegistroTerritorio(danoProducido[1][0], potencia[0], danoProducido[1][1])
+
+    return [disparo, danoProducido[1]]
 
 # E: Una coordenada y una lista de paises
 # S: Una lista
@@ -82,7 +98,7 @@ def calcularDano(pais):
 
     pais[1] = vidaActiva*100
     pais[2] = extensionActiva
-
-    return [vidaAnterior*100, vidaActiva*100, pais]
+    
+    return [vidaAnterior*100, pais]
 
 

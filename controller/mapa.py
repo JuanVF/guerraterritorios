@@ -6,6 +6,7 @@ from guerraterritorios.services.serv_cantones import *
 from guerraterritorios.services.serv_provincias import *
 from guerraterritorios.services.serv_paises import *
 from guerraterritorios.controller.operaciones import *
+from guerraterritorios.controller.registros import *
 from guerraterritorios.utils.constantes import *
 
 codigosError = [
@@ -25,6 +26,14 @@ def obtenerMapa(PATH):
     except:
         return []
 
+# E: Un string y una lista de paises
+# S: Un booleano
+# D: Se encarga de guardar un mapa
+def guardarMapa(PATH, mapa):
+    mapa = str(mapa)
+
+    return guardar(PATH, mapa)
+
 
 # E: Dos listas de coordenadas, (deben pertenecer al modelo canton)
 # S: Booleano
@@ -37,9 +46,9 @@ def estaContenido(cuadrante1, cuadrante2):
     long2 = obtenerLongitudes(cuadrante2)
 
     for longitud in long2:
-        if crearUnidad(long1[0]) <= crearUnidad(longitud) and crearUnidad(longitud) <= crearUnidad(long1[1]):
+        if calcularSegundos(long1[0]) <= calcularSegundos(longitud) and calcularSegundos(longitud) <= calcularSegundos(long1[1]):
             for latitud in lat2:
-                if lat1[0] <= latitud and latitud <= lat1[1]:
+                if calcularSegundos(lat1[0]) <= calcularSegundos(latitud) and calcularSegundos(latitud) <= calcularSegundos(lat1[1]):
                     return True
 
     return False
@@ -64,18 +73,21 @@ def hayTraslapacionEnMapa(paises):
     for i in range(0, len(cantones)):
         for canton in cantones[i+1:]:
             if hayTraslapacion(cantones[i], canton):
-                return True
+                return [1, canton]
     
-    return False
+    return [0]
 
 # E: Una lista de paises
 # S: Una lista
 # D: Verifica que el mapa de territorios contenga la estructura de listas adecuada
 def verificarEstructuraMapa(paises):
-    if not sonPaises(paises):
+    if not sonPaises(paises) or hayNombresRepetidos(paises):
         return codigosError[1]
 
-    if hayTraslapacionEnMapa(paises):
+    codigosTraslape = hayTraslapacionEnMapa(paises)
+
+    if codigosTraslape[0] != 0:
+        codigosError[2][2] = [codigosTraslape[1]]
         return codigosError[2]
         
     return codigosError[0]
@@ -96,10 +108,19 @@ def calcularExtension(pais):
 
         extension = dLatitudes[0]*GRADO + dLatitudes[1]*MINUTOS + dLatitudes[2]*SEGUNDOS
         extension *= (dLongitudes[0]*GRADO + dLongitudes[1]*MINUTOS + dLongitudes[2]*SEGUNDOS)
-
         extensionT += extension
         
     return extensionT
+
+# E: Una lista de paises
+# S: Booleano
+# D: Calcula las extensiones del mapa y lo actualiza
+def calcularExtensionesMapa(mapa):
+    for i in range(0, len(mapa)):
+        extensionT = calcularExtension(mapa[i])
+        mapa[i][2] = extensionT
+
+    guardarMapa(path, str(mapa))
 
 # E: Una lista de coordenadas
 # S: Un entero positivo
@@ -111,6 +132,7 @@ def calcularDistancia(coordenadas):
     distancia = abs(posicion1 - posicion2)
 
     return segundosAPosicion(distancia)
+
 
 # E: Una posicion
 # S: Un entero positivo
@@ -130,3 +152,13 @@ def segundosAPosicion(segundos):
     minutos = minutos % 60
         
     return [grados, minutos, segundos]
+
+# E: Una lista de paises, un pais
+# S: Un booleano
+# D: Se encarga de actualizar los datos del mapa en caso de impacto
+def realizarImpactoAMapa(paises, pais, PATH):
+    for i in range(0, len(paises)):
+        if paises[i][0] == pais[0]:
+            paises[i] == pais
+
+    return guardarMapa(PATH, paises)

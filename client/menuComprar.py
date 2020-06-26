@@ -8,7 +8,7 @@ from guerraterritorios.controller.registros import guardarRegistroCompra
 from guerraterritorios.utils import constantes as colores
 from guerraterritorios.utils.utils import convertAInt, clear
 
-def menuComprarMisiles():
+def menuComprarMisiles(PATH):
     print(colores.WARNING, "Comprar misiles:", colores.NORMAL)
     potencias = buscarPotencias()
     length = len(potencias) - 1
@@ -20,21 +20,21 @@ def menuComprarMisiles():
         return
     elif opt > length:
         print(colores.FAIL, "La opcion es incorrecta, elija otra opcion:", colores.NORMAL)
-        menuComprarMisiles()
+        menuComprarMisiles(PATH)
     else:
         clear()
-        menuDeCompra(potencias[opt])
+        menuDeCompra(potencias[opt], PATH)
     return
 
-# E: Una potencia
-def menuDeCompra(potencia):
+# E: Una potencia y un string
+def menuDeCompra(potencia, PATH):
     print(colores.WARNING, "Cuantos misiles desea comprar para: ", colores.NORMAL, potencia[0])
     print("El numero debe estar entre 100 y 1000 (solo multiplos de 100)")
     cantMisiles = input("")
     cantMisiles = convertAInt(cantMisiles)
 
     if 100 <= cantMisiles and cantMisiles <= 1000 and cantMisiles % 100 == 0:
-        if comprarMisiles(potencia[0], cantMisiles):
+        if comprarMisiles(potencia[0], cantMisiles, PATH):
             guardarRegistroCompra(potencia[0], cantMisiles)
             print("Se pudieron comprar", cantMisiles, "misiles!")
             input("")
@@ -47,13 +47,13 @@ def menuDeCompra(potencia):
 
             if opt == 1:
                 clear()
-                menuDeCompra(potencia)
+                menuDeCompra(potencia, PATH)
             else:
                 return
     else:
         clear()
         print(colores.WARNING, "Ingrese una cantidad correcta!", colores.NORMAL)
-        menuDeCompra(potencia)
+        menuDeCompra(potencia, PATH)
     return
 
 # E: Una lista de potencias:

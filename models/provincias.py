@@ -22,3 +22,12 @@ def esUnaProvincia(lista):
             return False
 
     return True
+
+def verificarNombresCantones(provincia):
+    cantones = provincia[1]
+    for i in range(0, cantones):
+        for canton in cantones[i+1:]:
+            if cantones[i][0] == canton[0]:
+                return False
+    
+    return True

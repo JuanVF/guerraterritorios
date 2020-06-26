@@ -5,8 +5,8 @@ sys.path.append("..")
 from guerraterritorios.utils.utils import cumpleEstructura
 
 coordenadas = [
-    list,  # latitud
     list,  # longitud
+    list,  # latitud
 ]
 
 pos = [
@@ -22,7 +22,7 @@ def esUnaCoordenada(lista):
     if not cumpleEstructura(lista, coordenadas):
         return False
     
-    if not esUnaLatitud(lista[0]) or not esUnaLongitud(lista[1]):
+    if not esUnaLongitud(lista[0]) or not esUnaLatitud(lista[1]):
         return False
     return True
 

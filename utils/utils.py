@@ -11,18 +11,21 @@ def obtenerFecha():
     formato = str(fecha.year) + "-" + str(fecha.month) + "-" + str(fecha.day) + " " + str(fecha.hour) + ":" + str(fecha.minute) + ":" + str(fecha.second)
  
     return formato 
-# E: Un string
-# S: Un int mayor o igual que 0
+# E: Un string, un booleano
+# S: Un int mayor o igual que 0 o Un string si neg=True
 # D: Convierte un string a un entero positivo o 0, retorna -1 si hay error
-def convertAInt(string):
+#    Acepta negativos si se envia neg=True
+def convertAInt(string, neg=False):
     num = -1
 
     try:
         num = eval(string)
 
-        if num < 0:
+        if num < 0 and not neg:
             return -1
     except:
+        if neg:
+            return "Error"
         return num
 
     return num
